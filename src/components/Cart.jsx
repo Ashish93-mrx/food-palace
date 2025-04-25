@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem, decreaseItem, clearCart } from "../utils/cartSlice";
 import { CON_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import ItemList from "./ItemList";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -49,54 +50,17 @@ const Cart = () => {
       ) : (
         <>
           <div className="space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between border p-4 rounded shadow-sm"
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={CON_URL + "/" + item.imageId}
-                    alt={item.name}
-                    className="w-20 h-20 object-cover rounded"
-                  />
-                  <div>
-                    <h3 className="text-lg font-medium">{item.name}</h3>
-                    <p className="text-sm text-gray-600">
-                      ₹
-                      {(item.price
-                        ? item.price / 100
-                        : item.defaultPrice / 100
-                      ).toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-red-300"
-                    onClick={() => handleDecrement(item.id)}
-                  >
-                    -
-                  </button>
-                  <span className="font-semibold">{item.count}</span>
-                  <button
-                    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-green-300"
-                    onClick={() => handleIncrement(item)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
+            {cartItems.map((i) => (
+              <ItemList item={i} key={i?.id} deleteToggle={true} />
             ))}
           </div>
 
           <div className="mt-6 flex justify-between items-center border-t pt-4">
             <h4 className="text-xl font-semibold">
-              Total: ₹{totalPrice.toFixed(2)}
+              Total: ₹{Math.ceil(totalPrice)}
             </h4>
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
               onClick={handleClearCart}
             >
               Clear Cart
@@ -109,3 +73,44 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+
+{/* <div
+key={item.id}
+className="flex items-center justify-between border p-4 rounded shadow-sm"
+>
+<div className="flex items-center gap-4">
+  <img
+    src={CON_URL + "/" + item.imageId}
+    alt={item.name}
+    className="w-20 h-20 object-cover rounded"
+  />
+  <div>
+    <h3 className="text-lg font-medium">{item.name}</h3>
+    <p className="text-sm text-gray-600">
+      ₹
+      {(item.price
+        ? item.price / 100
+        : item.defaultPrice / 100
+      ).toFixed(2)}
+    </p>
+  </div>
+</div>
+
+<div className="flex items-center gap-2">
+  <button
+    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-red-300"
+    onClick={() => handleDecrement(item.id)}
+  >
+    -
+  </button>
+  <span className="font-semibold">{item.count}</span>
+  <button
+    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-green-300"
+    onClick={() => handleIncrement(item)}
+  >
+    +
+  </button>
+</div>
+</div> */}

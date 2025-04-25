@@ -17,14 +17,14 @@ const RestaurantCategory = ({data,showItems,setShowIndex}) => {
                 onClick={handleClick}>
                     <span className="font-bold text-lg">{data.title}({data.itemCards.length})</span>
                         <span className="text-2xl text-gray-600">
-                        {showItems ? (
+                        {tmp && showItems ? (
                             '⬆️'
                         ) : (
                             '⬇️'
                         )}
                         </span>
                 </div>
-                {tmp && showItems && data.itemCards.map((i)=><ItemList item={i?.card?.info} key={i?.card?.info?.id}/>)}
+                {tmp && showItems && data.itemCards.map((i)=><ItemList item={i?.card?.info} key={i?.card?.info?.id} deleteToggle={false}/>)}
             </div>
         </div>
     );

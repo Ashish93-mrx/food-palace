@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { useContext } from "react";
 import UserContext from "../utils/UserContext";
+import TopRestaurant from "./TopRestaurant";
 
 const Body = () => { 
 
@@ -12,6 +13,8 @@ const Body = () => {
     const [temp, setTemp] = useState([]);
     const [searchText, setSearchText] = useState("");
     const {loggedInUser,setUserName} = useContext(UserContext);
+    const [imageGrids, setImageGrids] = useState([]);
+    
 
 // "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //higher order component
@@ -31,20 +34,28 @@ const Body = () => {
         // setListResObj(json.data.cards);
         setListResObj(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setTemp(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
-        console.log(resObj,"sec");
+        console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"okokoko1")
+        setImageGrids(json?.data?.cards[1]?.card?.card);
+        console.log(json?.data?.cards[1]?.card?.card,"okokoko2");
+        // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
+        // console.log(resObj,"sec");
     }
 
     const onlineStatus = useOnlineStatus();
 
     if(onlineStatus ===false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>
 //conditional rendering
-    if(resObj.length === 0){
-        return (<div className="flex flex-wrap justify-center">
+    if(resObj.length === 0 && imageGrids.length === 0){
+        return (    <div className="pt-5 w-full">
+     <div className="w-[85%] mx-auto ">
+        <div className="flex flex-wrap justify-center">
             {Array(10).fill(null).map((_, index) => (
               <Shimmer key={index} />
             ))}
-          </div>)
+          </div>
+          </div>
+          </div>
+          )
     }
 
 
@@ -116,25 +127,29 @@ const Body = () => {
 
   {/* Filter Button */}
   <div className="search">
-    <button
+    {/* <button
       className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md transition"
       
     >
       Filter res
-    </button>
+    </button> */}
   </div>
 </div>
-
+<div className="w-full">
+<div className="w-[75%] mx-auto overflow-hidden">
+<TopRestaurant trg={imageGrids}/>
                 <div className="font-bold text-2xl px-4 py-2">Restaurants</div>
-                <div className="flex flex-wrap items-center">
+                <div className="flex flex-wrap">
                 {
                     resObj.map((i)=>( <Link to={'/restaurants/'+i?.info?.id} key={i?.info?.id} >
 
                         <RestaurantCard resData = {i.info} />
                     </Link>
-                    ))}
-                    {console.log("render")}
+                    ))
+                }
                 </div>
+        </div>
+        </div>
         </div>
     )
 }

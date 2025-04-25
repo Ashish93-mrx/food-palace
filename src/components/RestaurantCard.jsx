@@ -14,7 +14,7 @@ costForTwo,sla
     return (
         <div
   data-testid="resCard"
-  className="m-4 p-4 w-[260px] rounded-2xl bg-white hover:shadow-xl transition-all duration-300 border border-gray-200"
+  className="m-2 p-2 w-[260px] rounded-2xl bg-white hover:shadow-xl transition-all duration-300 border border-gray-200"
 >
   <img
     className="rounded-xl w-full h-40 object-cover"

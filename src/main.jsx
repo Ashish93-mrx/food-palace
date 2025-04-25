@@ -22,7 +22,7 @@ const appRouter = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { path: "/", element: <Body /> },
-      { path: "/about", element: <Suspense fallback={<Shimmer />}><About /></Suspense> },
+      { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/restaurants/:resId", element: <RestaurantMenu /> },
       { path: "/grocery", element: <Suspense fallback={<Shimmer />}><Grocery /></Suspense> },
