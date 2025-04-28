@@ -7,7 +7,7 @@ const RestaurantCard = (props) =>{
     const {resData} = props;
     // console.log(resData);
     const {name,cloudinaryImageId,cuisines,
-costForTwo,sla
+costForTwo,sla,areaName
     } = resData;
 
     const {loggedInUser} = useContext(UserContext)
@@ -25,8 +25,11 @@ costForTwo,sla
   <div className="mt-4">
     <h3 className="font-semibold text-lg text-gray-800 truncate">{name}</h3>
 
-    <p className="text-sm text-gray-500 mt-1 truncate">
+    <p className="text-sm text-gray-950 mt-1 truncate">
       {cuisines.join(", ")}
+    </p>
+    <p className="text-sm text-gray-500 mt-1 truncate">
+      {areaName}
     </p>
 
     <div className="flex justify-between items-center mt-3 text-sm text-gray-600">

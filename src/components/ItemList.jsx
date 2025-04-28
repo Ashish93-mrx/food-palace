@@ -28,7 +28,7 @@ const ItemList = ({ item, deleteToggle }) => {
       >
         <div className="w-9/12">
           <div className="py-2 flex justify-between">
-            <div><span>{item.name}{" "}</span></div>
+            <div><span className="font-bold text-lg">{item.name}</span></div>
             <div><span>
               Rs.{" "}
               {Math.ceil(item.price
@@ -38,7 +38,7 @@ const ItemList = ({ item, deleteToggle }) => {
             </div>
           </div>
           <p className="text-xs">{item.description}</p>
-          <h5>{deleteToggle && Math.ceil((item.price ? item.price / 100 : item.defaultPrice / 100))*count }</h5>
+          <h5>{deleteToggle && "Rs.  "+ Math.ceil((item.price ? item.price / 100 : item.defaultPrice / 100))*count }</h5>
         </div>
 
         <div className="relative w-32 h-32">

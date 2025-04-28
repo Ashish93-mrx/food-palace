@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 import {Shimmer} from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -6,23 +6,39 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import { useContext } from "react";
 import UserContext from "../utils/UserContext";
 import TopRestaurant from "./TopRestaurant";
+import debounce from "../utils/useDebounce";
 
 const Body = () => { 
 
     const [resObj, setListResObj] = useState([]);
     const [temp, setTemp] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const [locSearchText, setLocSearchText] = useState("");
     const {loggedInUser,setUserName} = useContext(UserContext);
     const [imageGrids, setImageGrids] = useState([]);
+    const [locList, setLocList] = useState([]);
+    const [lon, setLon] = useState('74.8559568');
+    const [lat, setLat] = useState('12.9141417');
+
     
+    
+    const fetchAllLocations = async (val) => {
+      console.log(val,"from debounce");
+      const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/place-autocomplete?input=${val}`);
+
+      const res = await data.json();
+      setLocList(res?.data);
+    }
+    let LocDebounce = useMemo(() => debounce(fetchAllLocations),[]);
+
 
 // "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //higher order component
     useEffect(()=>{
-        fetchData();
+        fetchData(lon,lat);
     }, []);
-    const fetchData = async () => {
-        const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=12.9141417&lng=74.8559568&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING", {
+    const fetchData = async (lon,lat) => {
+        const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`, {
                 headers: {
                 'x-cors-api-key': 'temp_9dfcf6835ec787f9b9945118451b2d29'
                 }
@@ -41,13 +57,25 @@ const Body = () => {
         // console.log(resObj,"sec");
     }
 
+    const fetchLocData = async (val) => {
+      const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/address-recommend?place_id=${val}`);
+
+      const res = await data.json();
+      const lat = await res?.data[0]?.geometry?.location?.lat;
+      const lon = await res?.data[0]?.geometry?.location?.lng;
+      setLat(lat);
+      setLon(lon);
+      fetchData(lon,lat);
+      setLocList([]);
+    }
+
     const onlineStatus = useOnlineStatus();
 
     if(onlineStatus ===false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>
 //conditional rendering
     if(resObj.length === 0 && imageGrids.length === 0){
         return (    <div className="pt-5 w-full">
-     <div className="w-[85%] mx-auto ">
+     <div className="w-[85%] mx-auto">
         <div className="flex flex-wrap justify-center">
             {Array(10).fill(null).map((_, index) => (
               <Shimmer key={index} />
@@ -66,7 +94,7 @@ const Body = () => {
 
 
   {/* Username Input */}
-  <div className="search">
+  {/* <div className="search">
     <input
       type="text"
       className="border border-gray-300 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-orange-400"
@@ -74,8 +102,38 @@ const Body = () => {
       disabled
       onChange={(e) => setUserName(e.target.value)}
     />
-  </div>
+  </div> */}
+  <div className="search">
+  <div className="relative">
+  <input
+    type="text"
+    data-testid="searchInput"
+    className=" border border-gray-300 rounded-md px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-96"
+    value={locSearchText}
+    onChange={(e) => { setLocSearchText(e.target.value);
+    LocDebounce(e.target.value)}
+    }
+    placeholder="Enter the Location"
+  />
+<div className="relative">
+  <span className="absolute">
+    {locList &&
+      locList.map((i, idx) => (
+        <div 
+          key={idx} 
+          className="bg-white border border-gray-300 text-gray-900 text-sm  w-full shadow-lg overflow-hidden dark:bg-gray-700 dark:border-gray-600 px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+          onClick={()=>fetchLocData(i.place_id)}
+        >
+          <div className="text-black dark:text-amber-50 font-medium">{i.structured_formatting?.main_text}</div>
+          <div className="text-gray-300 text-xs">{i.structured_formatting?.secondary_text}</div>
+        </div>
+      ))
+    }
+  </span>
+</div>
 
+  </div>
+  </div>
   <div className="search">
   <div className="relative w-full max-w-md">
   <input
