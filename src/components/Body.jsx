@@ -27,7 +27,6 @@ const Body = () => {
     
     
     const fetchAllLocations = async (val) => {
-      console.log(val,"from debounce");
       const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/place-autocomplete?input=${val}`);
 
       const res = await data.json();
@@ -54,9 +53,7 @@ const Body = () => {
         // setListResObj(json.data.cards);
         setListResObj(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setTemp(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"okokoko1")
         setImageGrids(json?.data?.cards[1]?.card?.card);
-        console.log(json?.data?.cards[1]?.card?.card,"okokoko2");
         // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
         // console.log(resObj,"sec");
     }
@@ -77,7 +74,7 @@ const Body = () => {
 
     if(onlineStatus ===false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>
 //conditional rendering
-    if(resObj.length === 0 && imageGrids.length === 0){
+    if(resObj?.length === 0 && imageGrids.length === 0){
         return (    <div className="pt-5 w-full">
      <div className="w-[85%] mx-auto">
         <div className="flex flex-wrap justify-center">
@@ -108,39 +105,56 @@ const Body = () => {
     />
   </div> */}
   <div className="search">
-  <div className="relative">
+  <div className="relative w-96">
   <input
     type="text"
     data-testid="searchInput"
-    className=" border border-black px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-96"
+    className="border border-black px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-full"
     value={locSearchText}
-    onChange={(e) => { setLocSearchText(e.target.value);
-    LocDebounce(e.target.value)}
-    }
+    onChange={(e) => {
+      setLocSearchText(e.target.value);
+      LocDebounce(e.target.value);
+    }}
     placeholder="Enter the Location"
   />
-<div className="relative">
-  <span className="absolute">
+
+  {locSearchText && (
+    <button
+      type="button"
+      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-black cursor-pointer"
+      onClick={() => {
+        setLocSearchText("");
+        setLocList([]);
+        // setListResObj([]);
+      }}
+    >
+      ✕
+    </button>
+  )}
+
+  <div className="absolute top-full z-10 w-full">
     {locList &&
       locList.map((i, idx) => (
-        <div 
-          key={idx} 
-          className="bg-white border border-gray-300 text-gray-900 text-sm  w-96 shadow-lg overflow-hidden dark:bg-gray-700 dark:border-gray-600 px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
-          onClick={()=>{
+        <div
+          key={idx}
+          className="bg-white border border-gray-300 text-gray-900 text-sm w-full shadow-lg overflow-hidden dark:bg-gray-700 dark:border-gray-600 px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+          onClick={() => {
             fetchLocData(i.place_id);
             setLocSearchText(i.description);
             dispatch(addLocationInput(i.place_id));
           }}
         >
-          <div className="text-black dark:text-amber-50 font-medium">{i.structured_formatting?.main_text}</div>
-          <div className="text-gray-300 text-xs">{i.structured_formatting?.secondary_text}</div>
+          <div className="text-black dark:text-amber-50 font-medium">
+            {i.structured_formatting?.main_text}
+          </div>
+          <div className="text-gray-300 text-xs">
+            {i.structured_formatting?.secondary_text}
+          </div>
         </div>
-      ))
-    }
-  </span>
+      ))}
+  </div>
 </div>
 
-  </div>
   </div>
   <div className="search">
   <div className="relative w-full max-w-md">
@@ -202,16 +216,16 @@ const Body = () => {
   </div>
 </div>
 <div className="w-full">
-<div className="w-[75%] mx-auto overflow-hidden">
+<div className="w-[75%] mx-auto overflow-x-visible">
 <TopRestaurant trg={imageGrids}/>
                 <div className="font-bold text-2xl px-4 py-2">Restaurants</div>
                 <div className="flex flex-wrap">
-                {
-                    resObj.map((i)=>( <Link to={'/restaurants/'+i?.info?.id} key={i?.info?.id} >
+                {(resObj) ?
+                    (resObj?.map((i)=>( <Link to={'/restaurants/'+i?.info?.id} key={i?.info?.id} >
 
                         <RestaurantCard resData = {i.info} />
                     </Link>
-                    ))
+                    ))) : (<h1 className="py-28 flex justify-center">Couldn't find data for your searched place, please refresh</h1>)
                 }
                 </div>
         </div>

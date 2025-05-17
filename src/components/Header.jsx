@@ -14,7 +14,6 @@ export const Header = () =>{
     // let Log = "Login";
 
     const cartItems = useSelector((store) => store.cart.items);
-    console.log(cartItems,"checking selector")
 
     return (
         <nav className="bg-orange-500 shadow-md px-6 sticky top-0 z-50">

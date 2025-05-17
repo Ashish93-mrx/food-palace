@@ -21,7 +21,7 @@ const useRestaurantCard = () => {
             );
 
             const json = await data.json();
-            console.log("Fetched Data:", json);
+            // console.log("Fetched Data:", json);
             // Ensure valid data structure
             const restaurants = json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
             setRes(restaurants);
@@ -31,7 +31,6 @@ const useRestaurantCard = () => {
         }
     };
 
-    console.log(res,"this is it")
     return res;
 };
 

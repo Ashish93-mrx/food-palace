@@ -7,13 +7,13 @@ function TopRestaurant(props) {
   const [scrollX, setScrollX] = useState(0);
   const containerRef = useRef(null);
   const { trg } = props;
-  const title = trg.header.title;
-  const topResList = trg.gridElements.infoWithStyle.restaurants;
+  const title = trg.header?.title;
+  const topResList = trg.gridElements?.infoWithStyle?.restaurants;
 
-  const CARD_WIDTH = 1000; 
+  const CARD_WIDTH = 276; 
 
   const handleNext = () => {
-    const maxScroll = (topResList.length * CARD_WIDTH) - containerRef.current.offsetWidth;
+    const maxScroll = (topResList?.length * CARD_WIDTH) - containerRef.current.offsetWidth;
     setScrollX(prev => Math.min(prev + CARD_WIDTH, maxScroll));
   };
 
@@ -36,7 +36,7 @@ function TopRestaurant(props) {
           <button
             onClick={handleNext}
             className={`w-9 h-9 flex items-center justify-center rounded-full 
-              ${(scrollX + containerRef?.current?.offsetWidth >= topResList.length * CARD_WIDTH)
+              ${(scrollX + containerRef?.current?.offsetWidth >= topResList?.length * CARD_WIDTH)
                 ? 'bg-gray-100 text-gray-400'
                 : 'bg-gray-200 text-gray-800'}`}
           >
@@ -46,11 +46,11 @@ function TopRestaurant(props) {
       </div>
 
       <div
-        className="flex gap-5 transition-transform duration-500 mt-4"
+        className="flex transition-transform duration-300 mt-4"
         style={{ transform: `translateX(-${scrollX}px)` }}
         ref={containerRef}
       >
-        {topResList.map((i) => (
+        {topResList?.map((i) => (
           <Link to={`/restaurants/${i?.info?.id}`} key={i?.info?.id}>
             <RestaurantCard resData={i.info} />
           </Link>
