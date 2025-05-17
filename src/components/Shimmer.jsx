@@ -36,7 +36,17 @@ export const Shimmer = () => {
   export const MenuShimmer = () => {
     return (
       <div className="max-w-2xl mx-auto mt-6 space-y-4">
-      {Array(5)
+      <div
+            className="rounded-lg shadow-md px-4 animate-pulse bg-white flex gap-2"
+          >
+            <div className="w-[10rem] h-[10rem] bg-gray-300 rounded mb-2"></div>
+            <span>
+            <div className="w-[8rem] h-6 bg-gray-300 rounded"></div>
+            <div className="w-[6rem] h-2 bg-gray-300 rounded mt-3"></div>
+            <div className="w-[4rem] h-3 bg-gray-300 rounded mt-3"></div>
+            </span>
+          </div>
+      {Array(4)
         .fill(0)
         .map((_, index) => (
           <div
@@ -44,7 +54,7 @@ export const Shimmer = () => {
             className="rounded-lg shadow-md p-4 animate-pulse bg-white"
           >
             <div className="w-3/4 h-4 bg-gray-300 rounded mb-2"></div>
-            <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
+            <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
           </div>
         ))}
     </div>

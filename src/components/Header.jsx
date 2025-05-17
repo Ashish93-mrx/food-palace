@@ -64,7 +64,7 @@ export const Header = () =>{
             <li className="relative">
   <Link
     to="/cart"
-    className="px-3 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
+    className="px-3 py-1 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
   >
     
 Cart

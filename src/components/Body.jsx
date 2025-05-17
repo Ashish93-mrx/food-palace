@@ -7,6 +7,8 @@ import { useContext } from "react";
 import UserContext from "../utils/UserContext";
 import TopRestaurant from "./TopRestaurant";
 import debounce from "../utils/useDebounce";
+import { useDispatch, useSelector } from "react-redux";
+import {addLocationInput} from "../utils/cartSlice"
 
 const Body = () => { 
 
@@ -20,6 +22,8 @@ const Body = () => {
     const [lon, setLon] = useState('74.8559568');
     const [lat, setLat] = useState('12.9141417');
 
+    const dispatch = useDispatch();
+    const selector = useSelector((state) => state.cart.locationInput);
     
     
     const fetchAllLocations = async (val) => {
@@ -35,7 +39,7 @@ const Body = () => {
 // "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //higher order component
     useEffect(()=>{
-        fetchData(lon,lat);
+      (!selector) ? fetchData(lon,lat) : fetchLocData(selector);
     }, []);
     const fetchData = async (lon,lat) => {
         const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`, {
@@ -108,7 +112,7 @@ const Body = () => {
   <input
     type="text"
     data-testid="searchInput"
-    className=" border border-gray-300 rounded-md px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-96"
+    className=" border border-black px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-96"
     value={locSearchText}
     onChange={(e) => { setLocSearchText(e.target.value);
     LocDebounce(e.target.value)}
@@ -121,8 +125,12 @@ const Body = () => {
       locList.map((i, idx) => (
         <div 
           key={idx} 
-          className="bg-white border border-gray-300 text-gray-900 text-sm  w-full shadow-lg overflow-hidden dark:bg-gray-700 dark:border-gray-600 px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
-          onClick={()=>fetchLocData(i.place_id)}
+          className="bg-white border border-gray-300 text-gray-900 text-sm  w-96 shadow-lg overflow-hidden dark:bg-gray-700 dark:border-gray-600 px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+          onClick={()=>{
+            fetchLocData(i.place_id);
+            setLocSearchText(i.description);
+            dispatch(addLocationInput(i.place_id));
+          }}
         >
           <div className="text-black dark:text-amber-50 font-medium">{i.structured_formatting?.main_text}</div>
           <div className="text-gray-300 text-xs">{i.structured_formatting?.secondary_text}</div>
@@ -136,7 +144,7 @@ const Body = () => {
   </div>
   <div className="search">
   <div className="relative w-full max-w-md">
-  <input
+  {/* <input
     type="text"
     data-testid="searchInput"
     className="w-full border border-gray-300 rounded-md px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400"
@@ -150,10 +158,10 @@ const Body = () => {
         setListResObj(filteredRes);
       }
     }}
-  />
+  /> */}
 
   {/* X Button */}
-  {searchText && (
+  {/* {searchText && (
     <button
       onClick={() => {
         setSearchText('');
@@ -163,13 +171,13 @@ const Body = () => {
     >
       ✕
     </button>
-  )}
+  )} */}
 </div>
 
   </div>
 
   {/* Search Button */}
-  <div className="search">
+  {/* <div className="search">
     <button
       className="bg-orange-400 hover:bg-orange-500 text-white px-5 py-2 rounded-md transition"
       onClick={() => {
@@ -181,7 +189,7 @@ const Body = () => {
     >
       Search
     </button>
-  </div>
+  </div> */}
 
   {/* Filter Button */}
   <div className="search">

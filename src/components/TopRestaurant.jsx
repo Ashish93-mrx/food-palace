@@ -22,7 +22,7 @@ function TopRestaurant(props) {
   };
 
   return (
-    <div className="mt-14 w-full overflow-hidden">
+    <div className="w-full overflow-hidden">
       <div className="flex justify-between items-center mt-5">
         <h1 className="font-bold text-2xl">{title}</h1>
         <div className="flex gap-3">

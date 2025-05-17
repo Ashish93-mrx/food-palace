@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: 'cart', 
     initialState: {
-        items: []
+        items: [],
+        locationInput: null
     },
 
     //below key 'addItem' is the action and it's value function is the reducer function
@@ -39,11 +40,15 @@ const cartSlice = createSlice({
 
         clearCart: (state) => {
             state.items.length = 0;
+        },
+
+        addLocationInput: (state, action) => {
+          state.locationInput = action.payload;
         }
     },
 
 });
 
-export const { addItem, decreaseItem, removeItem, clearCart } = cartSlice.actions;
+export const { addItem, decreaseItem, removeItem, clearCart, addLocationInput } = cartSlice.actions;
 
 export default cartSlice.reducer;
