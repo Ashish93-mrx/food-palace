@@ -32,12 +32,12 @@ const Body = () => {
   const { res, error, getLocation } = useGeoLocation();
 
   const handleClick = () => {
-    setLocLoad(true);
     getLocation();
   };
 
   useEffect(() => {
     if (res) {
+      setLocLoad(true);
       fetchData(res.lng, res.lat);
       setIsAutoFill(true);
       setLocSearchText(res.address);
