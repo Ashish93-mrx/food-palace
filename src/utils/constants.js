@@ -10,3 +10,5 @@ export const CORS_API = 'temp_9dfcf6835ec787f9b9945118451b2d29';
 
 //  export const MENU_API = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9801436&lng=77.5685724&restaurantId="
  export const MENU_API = "https://swadseva-server.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=21.1702401&lng=72.83106070000001&restaurantId="
+
+ export const GEO_LOC = "https://ash-yt-backend-vaz5.vercel.app/suggest?loc="
