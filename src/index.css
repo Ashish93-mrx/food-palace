@@ -3,3 +3,25 @@
 @tailwind utilities; */
 
 @import "tailwindcss";
+
+/* Shimmer Effect */
+.shimmer-bg {
+  background: linear-gradient(
+    to right,
+    #e0e0e0 8%,
+    #f0f0f0 18%,
+    #e0e0e0 33%
+  );
+  background-size: 800px 104px;
+  animation: shimmer 1.4s infinite linear;
+  background-repeat: no-repeat;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}

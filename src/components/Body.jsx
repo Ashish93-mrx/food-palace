@@ -23,6 +23,7 @@ const Body = () => {
   const { loggedInUser, setUserName } = useContext(UserContext);
   const [imageGrids, setImageGrids] = useState([]);
   const [locList, setLocList] = useState([]);
+  const [locLoad, setLocLoad] = useState(false);
   const [lon, setLon] = useState("76.65517489999999");
   const [lat, setLat] = useState("12.305163");
   const [onYourMindData] = useFoodCat();
@@ -77,11 +78,13 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setImageGrids(json?.data?.cards[1]?.card?.card);
+    setLocLoad(false);
     // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
     // console.log(resObj,"sec");
   };
 
   const fetchLocData = async (val) => {
+    setLocLoad(true);
     const data = await fetch(
       `https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/address-recommend?place_id=${val}`
     );
@@ -99,7 +102,7 @@ const Body = () => {
 
   if (onlineStatus === false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>;
   //conditional rendering
-  if (resObj?.length === 0 && imageGrids.length === 0) {
+  if ((resObj?.length === 0 && imageGrids.length === 0) || locLoad) {
     return (
       <div className="pt-5 w-full">
         <div className="w-[85%] mx-auto">
