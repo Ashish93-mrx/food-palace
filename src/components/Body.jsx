@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addLocationInput } from "../utils/cartSlice";
 import FoodCat from "./FoodCat";
 import useFoodCat from "../utils/useFoodCat";
+import useGeoLocation from '../utils/useGeoLocation';
 
 const Body = () => {
   const [resObj, setListResObj] = useState([]);
@@ -25,6 +26,18 @@ const Body = () => {
   const [onYourMindData] = useFoodCat();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.cart.locationInput);
+  const { res, error, getLocation } = useGeoLocation();
+
+  const handleClick = () => {
+    getLocation();
+  };
+
+  useEffect(() => {
+  if (res) {
+    fetchData(res.lng, res.lat);
+    console.log(res,"jiji1");
+  }
+}, [res]);
 
   const fetchAllLocations = async (val) => {
     const data = await fetch(
@@ -161,8 +174,17 @@ const Body = () => {
                   </div>
                 ))}
             </div>
+
           </div>
         </div>
+            <div className="w-64">
+            <button
+              className="border border-black px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-full"
+              onClick={(e) => handleClick()}
+            >
+              Get Current Location
+            </button>
+            </div>
         <div className="search">
           <div className="relative w-full max-w-md">
             {/* <input
