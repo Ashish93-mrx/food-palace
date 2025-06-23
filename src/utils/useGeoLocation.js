@@ -28,9 +28,6 @@ const useGeoLocation = () => {
         };
 
         setRes(finalResult); 
-        console.log("Address:", formatted_address);
-        console.log("Geometry:", geometry);
-        console.log("Coordinates:", lat, lng);
       } else {
         console.warn("No data found in response.");
       }
