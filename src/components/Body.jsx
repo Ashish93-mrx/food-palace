@@ -32,6 +32,7 @@ const Body = () => {
   const { res, error, getLocation } = useGeoLocation();
 
   const handleClick = () => {
+    setLocLoad(true);
     getLocation();
   };
 
