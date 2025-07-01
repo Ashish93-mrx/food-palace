@@ -30,7 +30,7 @@ const Body = () => {
     const [onYourMindData, setOnYourMindData] = useState([]);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.cart.locationInput);
-  const { res, error, getLocation } = useGeoLocation();
+  const { res, error, getLocation, loading } = useGeoLocation();
 
   const handleClick = () => {
     getLocation();
@@ -146,7 +146,7 @@ const Body = () => {
             <input
               type="text"
               data-testid="searchInput"
-              className="border px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400 w-full"
+              className="border px-4 py-2 pr-10 outline-none hover:border-blue-500 w-full"
               value={locSearchText}
               onChange={(e) => {
                 const value = e.target.value;
@@ -199,13 +199,17 @@ const Body = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-60">
+        <div className="max-w-72">
           <button
-            className="flex items-center border border-black px-4 py-2 pr-10 w-full cursor-pointer outline-none focus:ring-2 focus:ring-orange-400 gap-x-2"
+            className="flex items-center border border-black px-4 py-2 pr-10 w-full cursor-pointer outline-none hover:border-blue-500 gap-x-2"
             onClick={handleClick}
           >
-            <MdOutlineMyLocation className="text-lg" />
-            <span>Get Current Location</span>
+                        {(loading) ? (<>
+  <svg class="animate-spin h-5 w-5 mr-2 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+  </svg>
+  <span>Fetching your Location...</span></>) : (<><MdOutlineMyLocation className="text-lg" />Get Current Location</>)}
           </button>
         </div>
 

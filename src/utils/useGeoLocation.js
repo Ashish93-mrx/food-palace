@@ -5,7 +5,7 @@ const useGeoLocation = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
   const [res, setRes] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (location) {
       fetchExactLoc(location);
@@ -27,18 +27,24 @@ const useGeoLocation = () => {
           address: formatted_address,
         };
 
-        setRes(finalResult); 
+        setRes(finalResult);
       } else {
-        console.warn("No data found in response.");
+        setError("No data found in response.");
       }
     } catch (err) {
       console.error("Error fetching geolocation data:", err);
-    }
+      setError("Server error.");
+    } finally {
+      setLoading(false);
   };
 
   const getLocation = () => {
+    setError(null);
+    setLoading(true);
+
     if (!navigator.geolocation) {
-      setError("Geolocation not supported.");
+      setError("Geolocation is not supported by your browser.");
+      setLoading(false);
       return;
     }
 
@@ -50,7 +56,25 @@ const useGeoLocation = () => {
         });
       },
       (err) => {
-        setError(err.message);
+        let message = "";
+        switch (err.code) {
+          case err.PERMISSION_DENIED:
+            message = "Permission denied. Please allow location access.";
+            break;
+          case err.POSITION_UNAVAILABLE:
+            message = "Position unavailable.";
+            break;
+          case err.TIMEOUT:
+            message = "Request timed out.";
+            break;
+          default:
+            message = "An unknown error occurred.";
+            break;
+        }
+
+        console.error("Geolocation error:", message);
+        setError(message);
+        setLoading(false);
       },
       {
         enableHighAccuracy: true,
@@ -60,7 +84,7 @@ const useGeoLocation = () => {
     );
   };
 
-  return { res, error, getLocation };
+  return { res, error, getLocation, loading };
 };
 
 export default useGeoLocation;
