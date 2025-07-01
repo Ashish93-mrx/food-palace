@@ -35,12 +35,13 @@ const useGeoLocation = () => {
       console.error("Error fetching geolocation data:", err);
       setError("Server error.");
     } finally {
-      setLoading(false);
+      setLoading(false); 
+    }
   };
 
   const getLocation = () => {
     setError(null);
-    setLoading(true);
+    setLoading(true); 
 
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
@@ -74,7 +75,7 @@ const useGeoLocation = () => {
 
         console.error("Geolocation error:", message);
         setError(message);
-        setLoading(false);
+        setLoading(false); 
       },
       {
         enableHighAccuracy: true,
