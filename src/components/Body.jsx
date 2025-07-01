@@ -26,7 +26,8 @@ const Body = () => {
   const [locLoad, setLocLoad] = useState(false);
   const [lon, setLon] = useState("76.65517489999999");
   const [lat, setLat] = useState("12.305163");
-  const [onYourMindData] = useFoodCat();
+  // const [onYourMindData] = useFoodCat();
+    const [onYourMindData, setOnYourMindData] = useState([]);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.cart.locationInput);
   const { res, error, getLocation } = useGeoLocation();
@@ -54,11 +55,12 @@ const Body = () => {
   };
   let LocDebounce = useMemo(() => debounce(fetchAllLocations), []);
 
-  // "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //higher order component
+
   useEffect(() => {
     !selector ? fetchData(lon, lat) : fetchLocData(selector);
   }, []);
+
   const fetchData = async (lon, lat) => {
     const data = await fetch(
       `https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`,
@@ -79,6 +81,12 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setImageGrids(json?.data?.cards[1]?.card?.card);
+
+    let data2 = json?.data?.cards.find(
+            (data) => data?.card?.card?.id == "whats_on_your_mind"
+        ).card?.card?.imageGridCards?.info;
+
+        setOnYourMindData(data2);
     setLocLoad(false);
     // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
     // console.log(resObj,"sec");
@@ -102,6 +110,7 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
 
   if (onlineStatus === false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>;
+
   //conditional rendering
   if ((resObj?.length === 0 && imageGrids.length === 0) || locLoad) {
     return (

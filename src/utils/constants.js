@@ -9,6 +9,8 @@ export const CORS_API = 'temp_9dfcf6835ec787f9b9945118451b2d29';
  export const LOGO_URL = "https://i.pinimg.com/originals/4b/7b/d7/4b7bd7f98e8217f4d050be04db230af8.png";
 
 //  export const MENU_API = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9801436&lng=77.5685724&restaurantId="
- export const MENU_API = "https://swadseva-server.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=21.1702401&lng=72.83106070000001&restaurantId="
+//  export const MENU_API = "https://swadseva-server.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=21.1702401&lng=72.83106070000001&restaurantId="
 
  export const GEO_LOC = "https://ash-yt-backend-vaz5.vercel.app/suggest?loc="
+
+ export const MENU_API = "https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.5355161&lng=77.3910265&catalog_qa=undefined&submitAction=ENTER&restaurantId="
