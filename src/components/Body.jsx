@@ -24,10 +24,10 @@ const Body = () => {
   const [imageGrids, setImageGrids] = useState([]);
   const [locList, setLocList] = useState([]);
   const [locLoad, setLocLoad] = useState(false);
-  const [lon, setLon] = useState("76.65517489999999");
-  const [lat, setLat] = useState("12.305163");
+  const [lon, setLon] = useState("77.5920581");
+  const [lat, setLat] = useState("12.9966135");
   // const [onYourMindData] = useFoodCat();
-    const [onYourMindData, setOnYourMindData] = useState([]);
+  const [onYourMindData, setOnYourMindData] = useState([]);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.cart.locationInput);
   const { res, error, getLocation, loading } = useGeoLocation();
@@ -83,10 +83,10 @@ const Body = () => {
     setImageGrids(json?.data?.cards[1]?.card?.card);
 
     let data2 = json?.data?.cards.find(
-            (data) => data?.card?.card?.id == "whats_on_your_mind"
-        ).card?.card?.imageGridCards?.info;
+      (data) => data?.card?.card?.id == "whats_on_your_mind"
+    ).card?.card?.imageGridCards?.info;
 
-        setOnYourMindData(data2);
+    setOnYourMindData(data2);
     setLocLoad(false);
     // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
     // console.log(resObj,"sec");
@@ -204,12 +204,36 @@ const Body = () => {
             className="flex items-center border border-black px-4 py-2 pr-10 w-full cursor-pointer outline-none hover:border-blue-500 gap-x-2"
             onClick={handleClick}
           >
-                        {(loading) ? (<>
-  <svg class="animate-spin h-5 w-5 mr-2 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-  </svg>
-  <span>Fetching your Location...</span></>) : (<><MdOutlineMyLocation className="text-lg" />Get Current Location</>)}
+            {loading ? (
+              <>
+                <svg
+                  class="animate-spin h-5 w-5 mr-2 text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                <span>Fetching your Location...</span>
+              </>
+            ) : (
+              <>
+                <MdOutlineMyLocation className="text-lg" />
+                Get Current Location
+              </>
+            )}
           </button>
         </div>
 
