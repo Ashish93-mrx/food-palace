@@ -1,3 +1,4 @@
+// AppLayout.tsx
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -7,7 +8,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 
 const AppLayout = () => {
-  const [userName, setUserName] = useState();
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     setUserName("Ashish N M");
@@ -16,9 +17,13 @@ const AppLayout = () => {
   return (
     <Provider store={appStore}>
       <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        <Header />
-        <Outlet />
-        <Footer />
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
       </UserContext.Provider>
     </Provider>
   );
