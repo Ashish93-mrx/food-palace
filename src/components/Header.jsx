@@ -11,18 +11,15 @@ export const Header = () =>{
  
     const {loggedInUser} = useContext(UserContext);
     const onlineStatus = useOnlineStatus(); 
-    // let Log = "Login";
 
     const cartItems = useSelector((store) => store.cart.items);
 
     return (
         <nav className="bg-orange-500 shadow-md px-6 sticky top-0 z-50">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <Link to="/">
           <img className="w-26 h-auto object-contain" src={LOGO_URL} alt="Logo" />
           </Link>
-          {/* Hamburger icon */}
           <button
             className="text-white md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -88,28 +85,56 @@ Cart
           </ul>
         </div>
   
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <ul className="md:hidden mt-4 flex flex-col gap-3 text-white font-medium">
-            <li>Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
-            <li><Link to="/grocery">Grocery</Link></li>
-            <li><Link to="/cart">Cart ({cartItems.length} items)</Link></li>
-            <li>{loggedInUser}</li>
-            <li>
-              <button
-                className="bg-white text-orange-500 px-4 py-1 rounded-md hover:bg-orange-100 transition"
-                onClick={() =>
-                  setbtnName(btnName === "Login" ? "Logout" : "Login")
-                }
-              >
-                {btnName}
-              </button>
-            </li>
-          </ul>
-        )}
+{/* Mobile Menu */}
+{isMenuOpen && (
+  <ul className="md:hidden mt-4 mb-4 space-y-3 bg-gray-800 rounded-lg p-4 text-white font-medium shadow-lg z-50">
+    <li className="flex items-center justify-between">
+      <span>Online Status:</span>
+      <span className={onlineStatus ? "text-green-400" : "text-red-400"}>
+        {onlineStatus ? "🟢 Online" : "🔴 Offline"}
+      </span>
+    </li>
+
+    <li>
+      <Link to="/" className="block hover:text-orange-400 transition">
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link to="/about" className="block hover:text-orange-400 transition">
+        About Us
+      </Link>
+    </li>
+    <li>
+      <Link to="/contact" className="block hover:text-orange-400 transition">
+        Contact Us
+      </Link>
+    </li>
+    <li>
+      {/* <Link to="/grocery" className="block hover:text-orange-400 transition">
+        Grocery
+      </Link> */}
+    </li>
+    <li>
+      <Link to="/cart" className="block hover:text-orange-400 transition">
+        Cart <span className="text-sm">({cartItems.length} items)</span>
+      </Link>
+    </li>
+    <li className="text-sm italic text-gray-300">{loggedInUser}</li>
+
+    <li>
+      <button
+        className="w-full bg-white text-orange-600 font-semibold px-4 py-2 rounded-md hover:bg-orange-100 transition"
+        onClick={() =>
+          setbtnName(btnName === "Login" ? "Logout" : "Login")
+        }
+      >
+        {btnName}
+      </button>
+    </li>
+  </ul>
+)}
+
       </nav>
   
     )
