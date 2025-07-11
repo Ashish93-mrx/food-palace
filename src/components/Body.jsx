@@ -130,7 +130,7 @@ const Body = () => {
 
   return (
     <div className="body">
-      <div className="filter flex flex-wrap gap-4 p-4 items-start bg-gray-50 rounded-lg shadow-sm sticky top-27 z-40">
+      <div className="filter flex flex-wrap gap-4 p-4 items-start bg-gray-50 rounded-lg shadow-sm sticky top-2 sm:top-20 md:top-27 z-40">
         {/* Username Input */}
         {/* <div className="search">
     <input
