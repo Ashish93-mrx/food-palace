@@ -14,8 +14,18 @@ const useGeoLocation = () => {
 
   const fetchExactLoc = async (location) => {
     try {
-      const response = await fetch(`${GEO_LOC}${location.lat},${location.lng}`);
+      // const response = await fetch(`${GEO_LOC}${location.lat},${location.lng}`);
+      const response = await fetch(
+        `${GEO_LOC}?lat=${location.lat}&lng=${location.lng}`,
+      );
+
       const result = await response.json();
+
+      setRes({
+        lat: result.lat,
+        lng: result.lng,
+        address: result.address,
+      });
 
       if (result.data && result.data.length > 0) {
         const { formatted_address, geometry } = result.data[0];
@@ -27,7 +37,7 @@ const useGeoLocation = () => {
           address: formatted_address,
         };
 
-        setRes(finalResult);
+        // setRes(finalResult);
       } else {
         setError("No data found in response.");
       }
@@ -35,13 +45,13 @@ const useGeoLocation = () => {
       console.error("Error fetching geolocation data:", err);
       setError("Server error.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   const getLocation = () => {
     setError(null);
-    setLoading(true); 
+    setLoading(true);
 
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
@@ -75,13 +85,13 @@ const useGeoLocation = () => {
 
         console.error("Geolocation error:", message);
         setError(message);
-        setLoading(false); 
+        setLoading(false);
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0,
-      }
+      },
     );
   };
 

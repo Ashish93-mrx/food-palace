@@ -46,18 +46,18 @@ const Body = () => {
     }
   }, [res]);
 
-const fetchAllLocations = async (val) => {
-  if (!val) return;
+  const fetchAllLocations = async (val) => {
+    if (!val) return;
 
-  const res = await fetch(
-    `${API_BASE}/api/location-autocomplete?input=${encodeURIComponent(val)}`
-  );
+    const res = await fetch(
+      `${API_BASE}/api/location-autocomplete?input=${encodeURIComponent(val)}`,
+    );
 
-  if (!res.ok) return;
+    if (!res.ok) return;
 
-  const json = await res.json();
-  setLocList(json.data || []);
-};
+    const json = await res.json();
+    setLocList(json.data || []);
+  };
 
   let LocDebounce = useMemo(() => debounce(fetchAllLocations), []);
 
@@ -166,7 +166,7 @@ const fetchAllLocations = async (val) => {
                 setIsAutoFill(false);
               }}
               placeholder="Enter the Location"
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 pr-10 text-gray-800  bg-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 pr-10 text-gray-800  bg-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition"
             />
 
             {/* Clear Button */}
@@ -177,7 +177,7 @@ const fetchAllLocations = async (val) => {
                   setLocSearchText("");
                   setLocList([]);
                 }}
-                className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"
+                className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:text-gray-400 "
               >
                 ✕
               </button>
@@ -189,17 +189,16 @@ const fetchAllLocations = async (val) => {
                 {locList.map((i, idx) => (
                   <div
                     key={idx}
-                   onClick={() => {
-  const { lat, lng } = i.geometry.location;
+                    onClick={() => {
+                      const { lat, lng } = i.geometry.location;
 
-  setLat(lat);
-  setLon(lng);
-  fetchData(lng, lat);
+                      setLat(lat);
+                      setLon(lng);
+                      fetchData(lng, lat);
 
-  setLocSearchText(i.description);
-  setLocList([]);
-}}
-
+                      setLocSearchText(i.description);
+                      setLocList([]);
+                    }}
                     className="px-4 py-3 text-sm text-gray-900 dark:text-white border-b last:border-b-0 border-gray-100 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     <div className="font-medium">
@@ -218,7 +217,7 @@ const fetchAllLocations = async (val) => {
           <div className="w-full md:max-w-72">
             <button
               onClick={handleClick}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className="w-full cursor-pointer flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition"
             >
               {loading ? (
                 <>
@@ -320,20 +319,20 @@ const fetchAllLocations = async (val) => {
           <TopRestaurant trg={imageGrids} />
           <div className="font-bold text-2xl px-4 py-2">Restaurants</div>
           <div className="flex items-center justify-center pt-2 pb-8">
-          <div className="flex flex-wrap">
-            {resObj ? (
-              resObj?.map((i) => (
-                <Link to={"/restaurants/" + i?.info?.id} key={i?.info?.id}>
-                  <RestaurantCard resData={i.info} />
-                </Link>
-              ))
-            ) : (
-              <h1 className="py-28 flex justify-center">
-                Couldn't find data for your searched place, please refresh
-              </h1>
-            )}
+            <div className="flex flex-wrap">
+              {resObj ? (
+                resObj?.map((i) => (
+                  <Link to={"/restaurants/" + i?.info?.id} key={i?.info?.id}>
+                    <RestaurantCard resData={i.info} />
+                  </Link>
+                ))
+              ) : (
+                <h1 className="py-28 flex justify-center">
+                  Couldn't find data for your searched place, please refresh
+                </h1>
+              )}
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

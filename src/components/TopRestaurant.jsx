@@ -28,14 +28,14 @@ function TopRestaurant(props) {
         <div className="flex gap-3">
           <button
             onClick={handlePrev}
-            className={`w-9 h-9 flex items-center justify-center rounded-full 
+            className={`w-9 h-9 flex items-center justify-center cursor-pointer rounded-full 
               ${scrollX <= 0 ? 'bg-gray-100 text-gray-400' : 'bg-gray-200 text-gray-800'}`}
           >
             <FiArrowLeft />
           </button>
           <button
             onClick={handleNext}
-            className={`w-9 h-9 flex items-center justify-center rounded-full 
+            className={`w-9 h-9 flex items-center justify-center cursor-pointer rounded-full 
               ${(scrollX + containerRef?.current?.offsetWidth >= topResList?.length * CARD_WIDTH)
                 ? 'bg-gray-100 text-gray-400'
                 : 'bg-gray-200 text-gray-800'}`}
