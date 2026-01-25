@@ -33,7 +33,7 @@ class UserClass extends React.Component {
     const { name, location, avatar_url, html_url } = userInfo;
 
     return (
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg flex flex-col items-center space-y-4 py-18">
+      <div className="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg flex flex-col items-center space-y-4 py-18">
         <img
           src={avatar_url}
           alt="User Avatar"

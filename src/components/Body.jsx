@@ -177,7 +177,7 @@ const fetchAllLocations = async (val) => {
                   setLocSearchText("");
                   setLocList([]);
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"
+                className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"
               >
                 ✕
               </button>
@@ -185,7 +185,7 @@ const fetchAllLocations = async (val) => {
 
             {/* Autocomplete Dropdown */}
             {locList?.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg z-50 max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg z-50 max-h-64 overflow-y-auto premium-scrollbar">
                 {locList.map((i, idx) => (
                   <div
                     key={idx}
@@ -319,6 +319,7 @@ const fetchAllLocations = async (val) => {
           </div>
           <TopRestaurant trg={imageGrids} />
           <div className="font-bold text-2xl px-4 py-2">Restaurants</div>
+          <div className="flex items-center justify-center pt-2 pb-8">
           <div className="flex flex-wrap">
             {resObj ? (
               resObj?.map((i) => (
@@ -332,6 +333,7 @@ const fetchAllLocations = async (val) => {
               </h1>
             )}
           </div>
+        </div>
         </div>
       </div>
     </div>

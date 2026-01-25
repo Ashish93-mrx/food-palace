@@ -1,39 +1,41 @@
 import { LOGO_URL } from "../utils/constants";
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
 
-export const Header = () => {
-  const [btnName, setbtnName] = useState(["Logout"]);
+const Header = () => {
+  const [btnName, setBtnName] = useState("Logout");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { loggedInUser } = useContext(UserContext);
   const onlineStatus = useOnlineStatus();
-
   const cartItems = useSelector((store) => store.cart.items);
 
   return (
-    <nav className="bg-orange-500 shadow-md px-6 sticky top-0 z-50">
-      <div className="flex justify-between items-center">
-        <Link to="/">
+    <header className="sticky top-0 z-50 bg-orange-500 shadow-md">
+      <nav className="mx-auto flex items-center justify-between px-4 py-3 md:px-6">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2">
           <img
             src={LOGO_URL}
-            alt="Logo"
-            className="h-auto object-contain transition-all duration-300 w-18 sm:w-20 md:w-26"
+            alt="Food Palace"
+            className="w-16 sm:w-20 object-contain transition-transform hover:scale-105"
           />
         </Link>
+
+        {/* Mobile Menu Button */}
         <button
-          className="text-white md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-white"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          aria-label="Toggle menu"
         >
           <svg
-            className="w-6 h-6"
+            className="h-6 w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             {isMenuOpen ? (
               <path
@@ -53,118 +55,126 @@ export const Header = () => {
           </svg>
         </button>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-4 text-white font-medium">
-          <li>Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
-          <li>
-            <Link
-              to="/"
-              className="px-3 py-1 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
-            >
-              Home
-            </Link>
+        <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
+          <li className="flex items-center gap-1">
+            <span>Status:</span>
+            <span>{onlineStatus ? "🟢" : "🔴"}</span>
           </li>
-          <li>
-            <Link
-              to="/about"
-              className="px-3 py-1 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
-            >
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/contact"
-              className="px-3 py-1 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
-            >
-              Contact Us
-            </Link>
-          </li>
-          {/* <li><Link to="/grocery">Grocery</Link></li> */}
+
+          <NavItem to="/">Home</NavItem>
+          <NavItem to="/about">About</NavItem>
+          <NavItem to="/contact">Contact</NavItem>
+
+          {/* Cart */}
           <li className="relative">
             <Link
               to="/cart"
-              className="px-3 py-1 rounded-md hover:bg-white hover:text-orange-500 transition duration-200"
+              className="rounded-md px-3 py-1 hover:bg-white hover:text-orange-500 transition"
             >
               Cart
-              {/* Badge */}
-              <span className="absolute -top-2 -right-1  z-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full">
+              <span className="absolute -top-2 -right-2 rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-semibold text-white">
                 {cartItems.length}
               </span>
             </Link>
           </li>
 
-          {/* <li>{loggedInUser}</li> */}
           <li>
             <button
-              className="bg-white text-orange-500 px-4 py-1 rounded-md hover:bg-orange-100 transition"
+              className="rounded-md bg-white px-4 py-1 text-orange-500 font-semibold hover:bg-orange-100 transition"
               onClick={() =>
-                setbtnName(btnName === "Login" ? "Logout" : "Login")
+                setBtnName(btnName === "Login" ? "Logout" : "Login")
               }
             >
               {btnName}
             </button>
           </li>
         </ul>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
-        <ul className="md:hidden mt-4 mb-4 space-y-3 bg-gray-800 rounded-lg p-4 text-white font-medium shadow-lg z-50">
-          <li className="flex items-center justify-between">
-            <span>Online Status:</span>
-            <span className={onlineStatus ? "text-green-400" : "text-red-400"}>
-              {onlineStatus ? "🟢 Online" : "🔴 Offline"}
-            </span>
-          </li>
+        <div className="md:hidden bg-gray-900 text-white shadow-lg">
+          <ul className="space-y-4 px-6 py-5 text-sm font-medium">
+            <li className="flex items-center justify-between">
+              <span>Status</span>
+              <span className={onlineStatus ? "text-green-400" : "text-red-400"}>
+                {onlineStatus ? "🟢 Online" : "🔴 Offline"}
+              </span>
+            </li>
 
-          <li>
-            <Link to="/" className="block hover:text-orange-400 transition">
+            <MobileNavItem to="/" onClick={() => setIsMenuOpen(false)}>
               Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/about"
-              className="block hover:text-orange-400 transition"
-            >
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/contact"
-              className="block hover:text-orange-400 transition"
-            >
-              Contact Us
-            </Link>
-          </li>
-          <li>
-            {/* <Link to="/grocery" className="block hover:text-orange-400 transition">
-        Grocery
-      </Link> */}
-          </li>
-          <li>
-            <Link to="/cart" className="block hover:text-orange-400 transition">
-              Cart <span className="text-sm">({cartItems.length} items)</span>
-            </Link>
-          </li>
-          <li className="text-sm italic text-gray-300">{loggedInUser}</li>
+            </MobileNavItem>
+            <MobileNavItem to="/about" onClick={() => setIsMenuOpen(false)}>
+              About
+            </MobileNavItem>
+            <MobileNavItem to="/contact" onClick={() => setIsMenuOpen(false)}>
+              Contact
+            </MobileNavItem>
 
-          <li>
-            <button
-              className="w-full bg-white text-orange-600 font-semibold px-4 py-2 rounded-md hover:bg-orange-100 transition"
-              onClick={() =>
-                setbtnName(btnName === "Login" ? "Logout" : "Login")
-              }
-            >
-              {btnName}
-            </button>
-          </li>
-        </ul>
+            <MobileNavItem to="/cart" onClick={() => setIsMenuOpen(false)}>
+              Cart ({cartItems.length})
+            </MobileNavItem>
+
+            {loggedInUser && (
+              <li className="text-xs italic text-gray-400">
+                Logged in as {loggedInUser}
+              </li>
+            )}
+
+            <li>
+              <button
+                className="w-full rounded-md bg-white py-2 text-orange-600 font-semibold hover:bg-orange-100 transition"
+                onClick={() =>
+                  setBtnName(btnName === "Login" ? "Logout" : "Login")
+                }
+              >
+                {btnName}
+              </button>
+            </li>
+          </ul>
+        </div>
       )}
-    </nav>
+    </header>
   );
 };
+
+/* ---------- Reusable Components ---------- */
+
+const NavItem = ({ to, children }) => (
+  <li>
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `rounded-md px-3 py-1 transition
+        ${
+          isActive
+            ? "bg-white text-orange-500 font-semibold shadow-sm"
+            : "text-white hover:bg-white hover:text-orange-500"
+        }`
+      }
+    >
+      {children}
+    </NavLink>
+  </li>
+);
+const MobileNavItem = ({ to, children, onClick }) => (
+  <li>
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={({ isActive }) =>
+        `block rounded-md px-3 py-2 transition
+        ${
+          isActive
+            ? "bg-orange-500 text-white font-semibold"
+            : "text-white hover:text-orange-400"
+        }`
+      }
+    >
+      {children}
+    </NavLink>
+  </li>
+);
+
 
 export default Header;

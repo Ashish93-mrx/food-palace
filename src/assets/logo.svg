@@ -1,0 +1,29 @@
+<svg width="900" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="180" fill="transparent"/>
+
+  <!-- Palace Icon -->
+  <g transform="translate(40,40)" fill="#F28C28">
+    <!-- Base -->
+    <rect x="0" y="70" width="120" height="40" rx="6"/>
+    <!-- Center Tower -->
+    <rect x="45" y="20" width="30" height="50" rx="4"/>
+    <!-- Side Towers -->
+    <rect x="10" y="40" width="25" height="30" rx="4"/>
+    <rect x="85" y="40" width="25" height="30" rx="4"/>
+    <!-- Roof -->
+    <polygon points="0,70 60,35 120,70"/>
+  </g>
+
+  <!-- Brand Text -->
+  <text x="200" y="95" font-family="Montserrat, Arial, sans-serif"
+        font-size="56" font-weight="700" fill="#1E1E1E" letter-spacing="2">
+    FOOD PALACE
+  </text>
+
+  <!-- Tagline -->
+  <text x="202" y="130" font-family="Montserrat, Arial, sans-serif"
+        font-size="20" font-weight="400" fill="#555555" letter-spacing="1">
+    Premium Food Delivery
+  </text>
+</svg>
