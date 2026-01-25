@@ -1,3 +1,8 @@
+export const API_BASE =
+  import.meta.env.MODE === "development"
+    ? ""
+    : "https://yt-suggest-backend.vercel.app";
+
 export const RESTAURANT_URL = "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
 
 export const CORS_API = 'temp_9dfcf6835ec787f9b9945118451b2d29';

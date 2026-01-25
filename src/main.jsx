@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 import './index.css';
 import { lazy, Suspense } from "react";
 
-const Grocery = lazy(() => import("./components/Grocery"));
+// const Grocery = lazy(() => import("./components/Grocery"));
 const About = lazy(() => import("./components/About"));
 
 const appRouter = createBrowserRouter([
@@ -25,7 +25,7 @@ const appRouter = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/restaurants/:resId", element: <RestaurantMenu /> },
-      { path: "/grocery", element: <Suspense fallback={<Shimmer />}><Grocery /></Suspense> },
+      // { path: "/grocery", element: <Suspense fallback={<Shimmer />}><Grocery /></Suspense> },
       { path: "/cart", element: <Cart /> },
     ],
   },

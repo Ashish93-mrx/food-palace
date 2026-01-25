@@ -37,7 +37,7 @@ const ItemList = ({ item, deleteToggle }) => {
             </span>
             </div>
           </div>
-          <p className="text-xs">{item.description}</p>
+          <p className="text-sm">{item.description}</p>
           <img className="w-5 mt-3 rounded-sm" src={item.itemAttribute.vegClassifier=="VEG" ? 'https://www.pngkey.com/png/detail/261-2619381_chitr-veg-symbol-svg-veg-and-non-veg.png' : 'https://w7.pngwing.com/pngs/344/498/png-transparent-computer-icons-computer-software-light-non-veg-food-angle-rectangle-orange.png' }/>
           <i className="fi mt-1 text-xl fi-ss-star"></i>
           <h5>{deleteToggle && "Rs.  "+ Math.ceil((item.price ? item.price / 100 : item.defaultPrice / 100))*count }</h5>
