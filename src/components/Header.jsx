@@ -67,15 +67,22 @@ const Header = () => {
 
           {/* Cart */}
           <li className="relative">
-            <Link
+            <NavLink
               to="/cart"
-              className="rounded-md px-3 py-1 hover:bg-white hover:text-orange-500 transition"
+              className={({ isActive }) =>
+                `rounded-md px-3 py-1 transition relative
+      ${
+        isActive
+          ? "bg-white text-orange-500 font-semibold shadow-sm"
+          : "text-white hover:bg-white hover:text-orange-500"
+      }`
+              }
             >
               Cart
               <span className="absolute -top-2 -right-2 rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-semibold text-white">
                 {cartItems.length}
               </span>
-            </Link>
+            </NavLink>
           </li>
 
           <li>
@@ -96,7 +103,9 @@ const Header = () => {
           <ul className="space-y-4 px-6 py-5 text-sm font-medium">
             <li className="flex items-center justify-between">
               <span>Status</span>
-              <span className={onlineStatus ? "text-green-400" : "text-red-400"}>
+              <span
+                className={onlineStatus ? "text-green-400" : "text-red-400"}
+              >
                 {onlineStatus ? "🟢 Online" : "🔴 Offline"}
               </span>
             </li>
@@ -175,6 +184,5 @@ const MobileNavItem = ({ to, children, onClick }) => (
     </NavLink>
   </li>
 );
-
 
 export default Header;

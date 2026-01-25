@@ -10,12 +10,9 @@ import { useSelector } from "react-redux";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
-  // const [resInfo, setResInfo] = useState();
   const [showItems, setShowItems] = useState(false);
   const [showIndex, setShowIndex] = useState(null);
-  // console.log(data,"from acc");
   const handleClick = () => {
-    // setShowItems(!showItems);
   };
 
   const { lat, lng } = useSelector((state) => state.cart.location);
@@ -46,21 +43,25 @@ const RestaurantMenu = () => {
 
   return (
     <>
-      <div className="w-6/12 mx-auto my-8 bg-gray-50 shadow-lg p-4 flex flex-row">
+      <div className="w-6/12 mx-auto my-8 bg-white shadow-md rounded-2xl p-5 flex gap-4">
         <img
           src={CON_URL + "/" + cloudinaryImageId}
           alt="item"
           className="w-[10rem] h-[10rem] object-cover rounded-lg"
         />
         <div className="ml-2">
-          <h1 className="font-bold  text-2xl">{name}</h1>
+         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+  {name}
+</h1>
+
 
           <span className="font-medium flex items-center">
             <p>{avgRatingString}</p>
-            <IoIosStar />
-            <p className="pl-4">
-              {cuisines.join(",")} - {costForTwoMessage}
-            </p>
+           <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
+  <IoIosStar className="text-green-600" />
+  {avgRatingString} · {cuisines.join(", ")}
+</p>
+
           </span>
           <p className="font-normal mt-4 flex items-center">
             <MdLocationPin />
@@ -69,8 +70,6 @@ const RestaurantMenu = () => {
         </div>
       </div>
       <div className="text-center">
-        {/* <h3>{costForTwoMessage}</h3>
-            <h2>Name of the restau</h2> */}
 
         {categories.map((category, index) => (
           <RestaurantCategory
@@ -80,10 +79,6 @@ const RestaurantMenu = () => {
             showItems={index === showIndex ? true : false}
           />
         ))}
-        {/* <ul>
-            {itemCards.map((i) =><li key={i?.card?.info?.id}>{i?.card?.info?.name}- Rs.{ i?.card?.info?.price/100 || i?.card?.info?.defaultPrice}</li>)}
-
-            </ul> */}
       </div>
     </>
   );

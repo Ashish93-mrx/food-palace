@@ -60,7 +60,7 @@ const Cart = () => {
       ) : (
         <>
           <div className="pt-10">
-          <div className="overflow-y-auto flex-1 px-4 h-[27rem]">
+          <div className="overflow-y-auto flex-1 px-4 h-[27rem] premium-scrollbar">
             {cartItems.map((i) => (
               <ItemList item={i} key={i?.id} deleteToggle={true} />
             ))}
