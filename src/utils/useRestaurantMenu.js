@@ -1,22 +1,37 @@
 import { useEffect, useState } from "react";
-import { MENU_API } from "./constants";
-const useRestaurantMenu = (resId) => {
+import { API_BASE } from "./constants";
 
-const [resInfo, setResInfo] = useState(null)
+const useRestaurantMenu = (resId, lat, lng) => {
+  const [resInfo, setResInfo] = useState(null);
 
-    useEffect(()=>{
-        fetchData();
-    },[resId]);
+  useEffect(() => {
+    if (!resId || !lat || !lng) return;
+    fetchData();
+  }, [resId, lat, lng]);
 
-    const fetchData = async () => {
-        const data = await fetch(MENU_API + resId);
-        const json = await data.json();
-        
-        // console.log(json.data,"from child")
-        setResInfo(json.data);
+  const fetchData = async () => {
+    try {
+      const res = await fetch(
+        `${API_BASE}/api/menu?restaurantId=1073138&lat=12.9966135&lng=77.5920581`,
+      );
+
+      if (!res.ok) throw new Error("Menu API failed");
+
+      const json = await res.json();
+      setResInfo(json.data);
+    } catch (err) {
+      console.warn("Using mock menu");
+
+      const mockRes = await fetch(
+        `${API_BASE}/api/mock-menu?restaurantId=${resId}`,
+      );
+
+      const mockJson = await mockRes.json();
+      setResInfo(mockJson.data);
     }
-    return resInfo;
+  };
 
-}
+  return resInfo;
+};
 
 export default useRestaurantMenu;

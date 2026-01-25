@@ -14,6 +14,7 @@ import useFoodCat from "../utils/useFoodCat";
 import useGeoLocation from "../utils/useGeoLocation";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { API_BASE } from "../utils/constants";
+import { addLocation } from "../utils/cartSlice";
 
 const Body = () => {
   const [resObj, setListResObj] = useState([]);
@@ -39,9 +40,16 @@ const Body = () => {
 
   useEffect(() => {
     if (res) {
+      dispatch(
+        addLocation({
+          lat: res.lat,
+          lng: res.lng,
+          address: res.address,
+        }),
+      );
       setLocLoad(true);
-      fetchData(res.lng, res.lat);
       setIsAutoFill(true);
+      fetchData(res.lng, res.lat);
       setLocSearchText(res.address);
     }
   }, [res]);
@@ -191,6 +199,14 @@ const Body = () => {
                     key={idx}
                     onClick={() => {
                       const { lat, lng } = i.geometry.location;
+
+                      dispatch(
+                        addLocation({
+                          lat,
+                          lng,
+                          address: i.description,
+                        }),
+                      );
 
                       setLat(lat);
                       setLon(lng);
