@@ -12,8 +12,7 @@ const RestaurantMenu = () => {
   const { resId } = useParams();
   const [showItems, setShowItems] = useState(false);
   const [showIndex, setShowIndex] = useState(null);
-  const handleClick = () => {
-  };
+  const handleClick = () => {};
 
   const { lat, lng } = useSelector((state) => state.cart.location);
   const resInfo = useRestaurantMenu(resId, lat, lng);
@@ -50,18 +49,15 @@ const RestaurantMenu = () => {
           className="w-[10rem] h-[10rem] object-cover rounded-lg"
         />
         <div className="ml-2">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-  {name}
-</h1>
-
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+            {name}
+          </h1>
 
           <span className="font-medium flex items-center">
-            <p>{avgRatingString}</p>
-           <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
-  <IoIosStar className="text-green-600" />
-  {avgRatingString} · {cuisines.join(", ")}
-</p>
-
+            <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
+              <IoIosStar className="text-green-600" />
+              {avgRatingString} · {cuisines.join(", ")}
+            </p>
           </span>
           <p className="font-normal mt-4 flex items-center">
             <MdLocationPin />
@@ -70,7 +66,6 @@ const RestaurantMenu = () => {
         </div>
       </div>
       <div className="text-center">
-
         {categories.map((category, index) => (
           <RestaurantCategory
             data={category?.card?.card}

@@ -16,7 +16,6 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-orange-500 shadow-md">
       <nav className="mx-auto flex items-center justify-between px-4 py-3 md:px-6">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img
             src={LOGO_URL}
@@ -25,7 +24,6 @@ const Header = () => {
           />
         </Link>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-white"
           onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -65,7 +63,6 @@ const Header = () => {
           <NavItem to="/about">About</NavItem>
           <NavItem to="/contact">Contact</NavItem>
 
-          {/* Cart */}
           <li className="relative">
             <NavLink
               to="/cart"
@@ -147,7 +144,6 @@ const Header = () => {
   );
 };
 
-/* ---------- Reusable Components ---------- */
 
 const NavItem = ({ to, children }) => (
   <li>

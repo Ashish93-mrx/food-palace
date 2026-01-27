@@ -44,7 +44,7 @@ const ItemList = ({ item, deleteToggle }) => {
         </div>
 
         <div className="relative w-32 h-32">
-          <div className="absolute -top-4 -left-4 w-20">
+          <div className="absolute -top-2 -left-4 w-20">
             {count > 0 ? (
               <div className="flex items-center justify-between bg-white rounded-lg shadow">
                 <button
