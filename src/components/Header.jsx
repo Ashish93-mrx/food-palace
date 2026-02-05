@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const [btnName, setBtnName] = useState("Logout");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const { loggedInUser } = useContext(UserContext);
   const onlineStatus = useOnlineStatus();
   const cartItems = useSelector((store) => store.cart.items);
@@ -54,11 +53,6 @@ const Header = () => {
         </button>
 
         <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
-          {/* <li className="flex items-center gap-1">
-            <span>Status:</span>
-            <span>{onlineStatus ? "🟢" : "🔴"}</span>
-          </li> */}
-
           <NavItem to="/">Home</NavItem>
           <NavItem to="/about">About</NavItem>
           <NavItem to="/contact">Contact</NavItem>

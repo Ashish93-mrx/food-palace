@@ -15,6 +15,7 @@ import useGeoLocation from "../utils/useGeoLocation";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { API_BASE } from "../utils/constants";
 import { addLocation } from "../utils/cartSlice";
+import { FaChevronDown } from "react-icons/fa";
 
 const Body = () => {
   const [resObj, setListResObj] = useState([]);
@@ -28,7 +29,7 @@ const Body = () => {
   const [locLoad, setLocLoad] = useState(false);
   const [lon, setLon] = useState("77.5920581");
   const [lat, setLat] = useState("12.9966135");
-  // const [onYourMindData] = useFoodCat();
+  const [expanded, setExpanded] = useState(false);
   const [onYourMindData, setOnYourMindData] = useState([]);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.cart.locationInput);
@@ -69,7 +70,7 @@ const Body = () => {
 
   let LocDebounce = useMemo(() => debounce(fetchAllLocations), []);
 
-  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //higher order component
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     !selector ? fetchData(lon, lat) : fetchLocData(selector);
@@ -87,7 +88,6 @@ const Body = () => {
 
     const json = await data.json();
 
-    // setListResObj(json.data.cards);
     setListResObj(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
@@ -104,8 +104,6 @@ const Body = () => {
 
     setOnYourMindData(data2);
     setLocLoad(false);
-    // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants,"first");
-    // console.log(resObj,"sec");
   };
 
   const fetchLocData = async (val) => {
@@ -127,7 +125,6 @@ const Body = () => {
 
   if (onlineStatus === false) return <h1>LOOKS LIKE YOU ARE OFFLINE</h1>;
 
-  //conditional rendering
   if ((resObj?.length === 0 && imageGrids.length === 0) || locLoad) {
     return (
       <div className="pt-5 w-full">
@@ -147,18 +144,7 @@ const Body = () => {
   return (
     <div className="body">
       <div className="filter flex flex-wrap gap-4 p-4 items-start bg-gray-50 rounded-lg shadow-sm sticky top-2 sm:top-18 z-40">
-        {/* Username Input */}
-        {/* <div className="search">
-    <input
-      type="text"
-      className="border border-gray-300 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-orange-400"
-      value={loggedInUser}
-      disabled
-      onChange={(e) => setUserName(e.target.value)}
-    />
-  </div> */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full max-w-3xl">
-          {/* Location Search Input */}
           <div className="relative w-full md:w-96">
             <input
               type="text"
@@ -270,62 +256,9 @@ const Body = () => {
         </div>
 
         <div className="search">
-          <div className="relative w-full max-w-md">
-            {/* <input
-    type="text"
-    data-testid="searchInput"
-    className="w-full border border-gray-300 rounded-md px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-orange-400"
-    value={searchText}
-    onChange={(e) => setSearchText(e.target.value)}
-    onKeyDown={(e) => {
-      if (e.key === 'Enter') {
-        const filteredRes = resObj.filter((i) =>
-          i.info.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setListResObj(filteredRes);
-      }
-    }}
-  /> */}
-
-            {/* X Button */}
-            {/* {searchText && (
-    <button
-      onClick={() => {
-        setSearchText('');
-        setListResObj(temp); // Reset to full list or do any custom logic
-      }}
-      className="absolute right-3 top-2 text-gray-500 hover:text-gray-800 text-lg font-bold focus:outline-none"
-    >
-      ✕
-    </button>
-  )} */}
-          </div>
+          <div className="relative w-full max-w-md"></div>
         </div>
-
-        {/* Search Button */}
-        {/* <div className="search">
-    <button
-      className="bg-orange-400 hover:bg-orange-500 text-white px-5 py-2 rounded-md transition"
-      onClick={() => {
-        const filteredRes = resObj.filter((i) =>
-          i.info.name.toLowerCase().includes(searchText)
-        );
-        setListResObj(filteredRes);
-      }}
-    >
-      Search
-    </button>
-  </div> */}
-
-        {/* Filter Button */}
-        <div className="search">
-          {/* <button
-      className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md transition"
-      
-    >
-      Filter res
-    </button> */}
-        </div>
+        <div className="search"></div>
       </div>
       <div className="w-full">
         <div className="w-[75%] mx-auto overflow-x-visible">
@@ -347,6 +280,73 @@ const Body = () => {
                   Couldn't find data for your searched place, please refresh
                 </h1>
               )}
+            </div>
+          </div>
+
+          <div className="mx-auto py-8">
+            <div className="relative bg-white border-1.5 rounded-2xl p-6 shadow-sm">
+              <div
+                className={`text-gray-700 leading-relaxed transition-all font-roboto duration-500 ease-in-out
+          ${expanded ? "max-h-[2000px]" : "max-h-[185px] overflow-hidden"}`}
+              >
+                <h2 className="text-2xl  font-semibold text-[#676a6d] mb-4">
+                  Discover Delicious Food Delights Online Near You
+                </h2>
+
+                <p className="mb-4 font-normal leading-5">
+                  Craving something delicious? Discover a world of culinary
+                  delights right at your fingertips with food delivery near me!
+                  Whether you're in the mood for a hearty burger, fresh sushi,
+                  or a comforting bowl of pasta, there's no shortage of options
+                  to satisfy your cravings. The convenience of online food
+                  delivery near me allows you to explore various restaurants and
+                  cuisines without leaving the comfort of your home.
+                </p>
+
+                <p className="mb-4 font-normal leading-5">
+                  Simply browse through local eateries, check out their menus,
+                  and find the perfect meal for any occasion. Whether you're
+                  planning a casual dinner with friends, a family feast, or a
+                  cozy night in, the choices are endless.
+                </p>
+
+                <h3 className="text-2xl font-semibold text-[#676a6d] mb-4">
+                  Convenience at Your Fingertips: Order Food Online Near You Now
+                </h3>
+
+                <p className="mb-4 font-normal leading-5">
+                  Experience the ultimate convenience with food ordering near me
+                  and indulge in your favourite meals without the hassle! With
+                  just a few clicks, you can order food online near me from a
+                  variety of restaurants, all offering speedy delivery right to
+                  your doorstep.
+                </p>
+
+                <p>
+                  Why wait in long lines or spend time cooking when you can have
+                  delicious meals delivered right to you? Order now and make
+                  mealtime special!
+                </p>
+              </div>
+
+              {!expanded && (
+                <div className="absolute bottom-20 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+              )}
+
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="text-orange-600 cursor-pointer font-medium hover:underline"
+                >
+                  <span className="flex items-center gap-1">
+                    {expanded ? "See less" : "See more"}
+                    <FaChevronDown
+                      className={`text-orange-600 text-xl w-4 text-gray-600 transform transition-transform duration-300
+                                ${expanded ? "rotate-180" : "rotate-0"}`}
+                    />
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
