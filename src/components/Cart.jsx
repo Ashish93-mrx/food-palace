@@ -3,28 +3,6 @@ import { clearCart } from "../utils/cartSlice";
 import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
 
-// const Cart = () => {
-//   const dispatch = useDispatch();
-//   const cartItems = useSelector((store) => store.cart.items);
-
-//   const handleIncrement = (item) => {
-//     dispatch(addItem(item));
-//   };
-
-//   const handleDecrement = (itemId) => {
-//     dispatch(decreaseItem(itemId));
-//   };
-
-//   const handleClearCart = () => {
-//     dispatch(clearCart());
-//   };
-
-//   const totalPrice = cartItems.reduce(
-//     (sum, item) =>
-//       sum +
-//       (item.price ? item.price / 100 : item.defaultPrice / 100) * item.count,
-//     0
-//   );
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
@@ -41,42 +19,59 @@ const Cart = () => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-16">
+    <div className="max-w-4xl mx-auto px-4 py-12 min-h-screen flex flex-col">
+      <h1 className="text-2xl font-semibold mb-6 font-roboto">Your Cart</h1>
+
       {cartItems.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-12 text-gray-500">
+        <div className="flex flex-col items-center justify-center text-gray-500">
           <img
             src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png"
             alt="Empty Cart"
-            className="w-48 h-48 mb-4"
+            className="w-40 h-40 mb-6 opacity-80"
           />
-          <p className="text-lg mb-2">Your cart is empty</p>
+          <p className="text-lg mb-3">Your cart is empty</p>
           <Link
             to="/"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
           >
-            Go back to explore
+            Explore Restaurants
           </Link>
         </div>
       ) : (
         <>
-          <div className="pt-10">
-          <div className="overflow-y-auto flex-1 px-4 h-[27rem] premium-scrollbar">
-            {cartItems.map((i) => (
-              <ItemList item={i} key={i?.id} deleteToggle={true} />
+          <div className="flex-1 h-[27rem] overflow-y-auto  premium-scrollbar">
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white"
+              >
+                <ItemList item={item} deleteToggle={true} />
+              </div>
             ))}
           </div>
-          </div>
 
-          <div className="absolute mt-[0rem] rounded-2xl shadow-2xl shadow-black w-full bg-white py-4 px-4 flex justify-between items-center max-w-4xl mx-auto">
-            <h4 className="text-xl font-semibold">
-              Total: ₹{Math.ceil(totalPrice)}
-            </h4>
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
-              onClick={handleClearCart}
-            >
-              Clear Cart
-            </button>
+          <div className="sticky bottom-0 bg-white border-t-2 shadow-lg mt-6">
+            <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+              <div>
+                <p className="text-sm text-gray-500">Total Amount</p>
+                <p className="text-xl font-semibold">
+                  ₹{Math.ceil(totalPrice)}
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleClearCart}
+                  className="px-4 py-2 rounded-lg border text-red-500 border-red-500 cursor-pointer hover:bg-red-50 transition"
+                >
+                  Clear Cart
+                </button>
+
+                <button className="px-6 py-2 rounded-lg bg-green-600 text-white cursor-pointer hover:bg-green-700 transition">
+                  Checkout
+                </button>
+              </div>
+            </div>
           </div>
         </>
       )}
@@ -85,44 +80,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-{
-  /* <div
-key={item.id}
-className="flex items-center justify-between border p-4 rounded shadow-sm"
->
-<div className="flex items-center gap-4">
-  <img
-    src={CON_URL + "/" + item.imageId}
-    alt={item.name}
-    className="w-20 h-20 object-cover rounded"
-  />
-  <div>
-    <h3 className="text-lg font-medium">{item.name}</h3>
-    <p className="text-sm text-gray-600">
-      ₹
-      {(item.price
-        ? item.price / 100
-        : item.defaultPrice / 100
-      ).toFixed(2)}
-    </p>
-  </div>
-</div>
-
-<div className="flex items-center gap-2">
-  <button
-    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-red-300"
-    onClick={() => handleDecrement(item.id)}
-  >
-    -
-  </button>
-  <span className="font-semibold">{item.count}</span>
-  <button
-    className="text-lg px-2 py-1 bg-gray-200 rounded hover:bg-green-300"
-    onClick={() => handleIncrement(item)}
-  >
-    +
-  </button>
-</div>
-</div> */
-}

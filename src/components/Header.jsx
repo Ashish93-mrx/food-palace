@@ -15,12 +15,12 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-orange-500 shadow-md">
-      <nav className="mx-auto flex items-center justify-between px-4 py-3 md:px-6">
+      <nav className="mx-auto flex items-center justify-between px-4 md:px-6">
         <Link to="/" className="flex items-center gap-2">
           <img
             src={LOGO_URL}
             alt="Food Palace"
-            className="w-16 sm:w-20 object-contain transition-transform hover:scale-105"
+            className="w-16 sm:w-17 object-contain transition-transform hover:scale-105"
           />
         </Link>
 
@@ -54,10 +54,10 @@ const Header = () => {
         </button>
 
         <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-white">
-          <li className="flex items-center gap-1">
+          {/* <li className="flex items-center gap-1">
             <span>Status:</span>
             <span>{onlineStatus ? "🟢" : "🔴"}</span>
-          </li>
+          </li> */}
 
           <NavItem to="/">Home</NavItem>
           <NavItem to="/about">About</NavItem>

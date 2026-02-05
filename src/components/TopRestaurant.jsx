@@ -46,7 +46,7 @@ function TopRestaurant(props) {
       </div>
 
       <div
-        className="flex transition-transform duration-300 mt-4"
+        className="flex transition-transform duration-300 mt-8"
         style={{ transform: `translateX(-${scrollX}px)` }}
         ref={containerRef}
       >

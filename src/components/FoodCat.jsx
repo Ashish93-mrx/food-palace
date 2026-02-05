@@ -53,7 +53,7 @@ function FoodCat({data = []}) {
 
             <div
                 style={{ translate: `-${value}%` }}
-                className={`flex mt-4  duration-300 `}
+                className={`flex duration-300 `}
             >
                 {
                     data?.map((item) => (

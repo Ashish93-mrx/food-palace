@@ -27,9 +27,9 @@ const ItemList = ({ item, deleteToggle }) => {
         className="p-4 m-2  bg-white border border-gray-200 border-b-2 text-left flex justify-between"
       >
         <div className="w-9/12">
-          <div className="py-2 flex justify-between">
-            <div><span className="font-bold text-lg">{item.name}</span></div>
-            <div><span className="font-semibold">
+          <div className="py-2 grid grid-cols-3">
+            <div className="col-span-2"><span className="font-bold text-lg">{item.name}</span></div>
+            <div className="col-span-1 flex justify-end"><span className="font-semibold">
               Rs.{" "}
               {Math.ceil(item.price
                 ? item.price / 100
